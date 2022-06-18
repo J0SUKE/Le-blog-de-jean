@@ -9,9 +9,7 @@ import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
 
-  articles?.forEach((element,index) => {
-    console.log(element,index);
-  });
+  console.log((articles && articles[0]));
   return (  
   <BlogLayout>
       
