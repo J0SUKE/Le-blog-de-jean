@@ -9,7 +9,7 @@ import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
 
-  articles.forEach((element,index) => {
+  articles?.forEach((element,index) => {
     console.log(element,index);
   });
   return (  
