@@ -28,7 +28,7 @@ export default function Article({articles}) {
           
           <h1>{(articles && articles[0].attributes.title)}</h1>    
           <article>
-            <img src={getStrapiMedia((articles && articles[0].attributes.image))} alt="" className={styles.illustration}/>
+            {/* <img src={getStrapiMedia((articles && articles[0].attributes.image))} alt="" className={styles.illustration}/> */}
             <ReactMarkdown skipHtml={false} rehypePlugins={[rehypeRaw]} >
               {(articles && articles[0].attributes.content)}
             </ReactMarkdown>                      
