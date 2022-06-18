@@ -9,7 +9,7 @@ import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
 
-  console.log(articles);
+  console.log(articles[0]);
   return (  
   <BlogLayout>
       
