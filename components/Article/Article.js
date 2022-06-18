@@ -12,7 +12,7 @@ export default function Article({articles}) {
   return (  
   <BlogLayout>
       
-      <section className={styles.content}>
+      {/* <section className={styles.content}>
         <div className={styles.posts_link}>
           <Link href="/blog">
             <a>All posts</a>
@@ -57,7 +57,7 @@ export default function Article({articles}) {
           }
           
         </section>
-      </section>
+      </section> */}
   </BlogLayout>
     
   )
