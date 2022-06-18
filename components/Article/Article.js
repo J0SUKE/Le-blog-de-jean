@@ -9,10 +9,11 @@ import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
 
+  console.log(articles);
   return (  
   <BlogLayout>
       
-      <section className={styles.content}>
+      {/* <section className={styles.content}>
         <div className={styles.posts_link}>
           <Link href="/blog">
             <a>All posts</a>
@@ -34,7 +35,7 @@ export default function Article({articles}) {
             </ReactMarkdown>                      
           </article>
       </div>
-      </section>
+      </section> */}
       <section className={styles.recent}>
         <ul>
           <h2>Recent posts</h2>
@@ -66,7 +67,6 @@ export default function Article({articles}) {
 
 function OtherArticle({article}) {
   
-  console.log(article);
   return(
     <Link href={article.attributes.slug}>
       <a>
