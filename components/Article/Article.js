@@ -22,15 +22,15 @@ export default function Article({articles}) {
         <div className={styles.article}>
           <span className={styles.date}>
             <Moment format="DD MMM YYYY">
-                {(articles && articles[0]).attributes.createdAt}
+                {(articles && articles[0].attributes.createdAt)}
             </Moment>
           </span>
           
-          <h1>{(articles && articles[0]).attributes.title}</h1>    
+          <h1>{(articles && articles[0].attributes.title)}</h1>    
           <article>
-            <img src={getStrapiMedia((articles && articles[0]).attributes.image)} alt="" className={styles.illustration}/>
+            <img src={getStrapiMedia((articles && articles[0].attributes.image))} alt="" className={styles.illustration}/>
             <ReactMarkdown skipHtml={false} rehypePlugins={[rehypeRaw]} >
-              {(articles && articles[0]).attributes.content}
+              {(articles && articles[0].attributes.content)}
             </ReactMarkdown>                      
           </article>
       </div>
