@@ -12,7 +12,7 @@ export default function Article({articles}) {
   return (  
   <BlogLayout>
       
-      {/* <section className={styles.content}>
+      <section className={styles.content}>
         <div className={styles.posts_link}>
           <Link href="/blog">
             <a>All posts</a>
@@ -42,7 +42,7 @@ export default function Article({articles}) {
             <a>See all</a>
           </Link>
         </ul>
-        <section className={styles.other}>
+        {/* <section className={styles.other}>
           {
             articles.length ==3 ?
               <>
@@ -56,8 +56,8 @@ export default function Article({articles}) {
             null
           }
           
-        </section>
-      </section> */}
+        </section> */}
+      </section>
   </BlogLayout>
     
   )
