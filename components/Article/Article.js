@@ -15,7 +15,7 @@ export default function Article({articles}) {
       <section className={styles.content}>
         <div className={styles.posts_link}>
           <Link href="/blog">
-            <a>All posts</a>
+            <a>Tout les articles</a>
           </Link>
         </div>
         
@@ -37,9 +37,9 @@ export default function Article({articles}) {
       </section>
       <section className={styles.recent}>
         <ul>
-          <h2>Recent posts</h2>
+          <h2>Articles récents</h2>
           <Link href="/blog">
-            <a>See all</a>
+            <a>Tout les articles</a>
           </Link>
         </ul>
         <section className={styles.other}>

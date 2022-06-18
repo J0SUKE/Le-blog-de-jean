@@ -11,7 +11,7 @@ export default function Blog({articles}) {
   return (
     <BlogLayout>
       <section className={styles.content}>
-          <h2>The blog feed</h2>
+          <h2>Mes articles</h2>
           <section className={styles.feed}>
             <GalleryColumn articles={articles.filter((element,index)=>(index)%3==0)}/> 
             <GalleryColumn articles={articles.filter((element,index)=>(index)%3==1)}/> 
