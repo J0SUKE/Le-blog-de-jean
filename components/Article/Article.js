@@ -9,11 +9,10 @@ import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
 
-  console.log((articles && articles[0]));
   return (  
   <BlogLayout>
       
-      {/* <section className={styles.content}>
+      <section className={styles.content}>
         <div className={styles.posts_link}>
           <Link href="/blog">
             <a>All posts</a>
@@ -23,19 +22,19 @@ export default function Article({articles}) {
         <div className={styles.article}>
           <span className={styles.date}>
             <Moment format="DD MMM YYYY">
-                {articles!=undefined && articles[0].attributes.createdAt}
+                {(articles && articles[0]).attributes.createdAt}
             </Moment>
           </span>
           
-          <h1>{articles!=undefined && articles[0].attributes.title}</h1>    
+          <h1>{(articles && articles[0]).attributes.title}</h1>    
           <article>
-            <img src={getStrapiMedia(articles[0].attributes.image)} alt="" className={styles.illustration}/>
+            <img src={getStrapiMedia((articles && articles[0]).attributes.image)} alt="" className={styles.illustration}/>
             <ReactMarkdown skipHtml={false} rehypePlugins={[rehypeRaw]} >
-              {articles!=undefined && articles[0].attributes.content}
+              {(articles && articles[0]).attributes.content}
             </ReactMarkdown>                      
           </article>
       </div>
-      </section> */}
+      </section>
       <section className={styles.recent}>
         <ul>
           <h2>Recent posts</h2>
