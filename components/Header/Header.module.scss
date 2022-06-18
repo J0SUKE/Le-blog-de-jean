@@ -1,0 +1,40 @@
+.header
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1;
+    height: 70px;
+    min-height: 70px;
+    background: black;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: white;
+    padding: 0 1rem;
+
+    ul{
+        display: flex;
+        li{
+            margin-right: 2rem;
+        }
+    }
+
+    .logo
+    {
+        display: flex;
+        cursor: pointer;
+        align-items: center;
+        p{
+            margin-left: 1rem;
+            font-size: 1.3rem;
+        }
+        img
+        {
+            width: 30px;
+        }
+        @media screen and(max-width:520px) {
+            p,img{display: none;}
+        }
+    }
+}

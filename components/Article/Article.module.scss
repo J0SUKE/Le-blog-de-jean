@@ -1,0 +1,128 @@
+.content
+{
+    background: white;
+
+    .posts_link
+    {
+        padding: 1.5rem 0;
+        font-size: 1.2rem;
+        color: rgb(66, 66, 66);
+        font-weight: 500;
+        width: 80%;
+        max-width: 700px;
+        margin: auto;
+    }
+}
+
+.article
+{
+    width: 90%;
+    max-width: 700px;
+    margin: auto;
+    padding-top: 60px;
+    .illustration
+    {
+        width: 100%;
+        max-width: unset;
+        max-height: 300px;
+        object-fit: cover;
+        margin-bottom: 3rem;
+
+    }
+
+    article{
+        h1{
+            color: black;
+            font-size: 2.1rem;
+        }
+        li{
+            font-size: 1.2rem;
+        }
+        a{
+            color: crimson;
+        }
+        code{
+            display: block;
+            border-radius: 5px;
+            background:rgb(38, 38, 38);
+            margin: 1rem 0;
+            padding: 1rem .5rem;
+            color: white;
+        }
+        h2{
+            margin: 2rem 0;
+        }
+        img{
+            width: 100%;
+            display: block;
+            margin: 2rem 0;
+        }
+    }
+
+    h1{
+        margin: 2rem 0;
+        font-size: 2rem;
+        color: crimson;
+    }
+
+    p{
+        font-size: 1.2rem;
+        line-height: 2rem;
+        margin: 1rem 0;
+    }
+    
+    .date
+    {
+        font-size: 1rem;
+        margin-top: 3rem;
+        color: rgb(64, 64, 64);
+    }
+
+    border-bottom: 1px solid rgb(195, 195, 195);
+    padding-bottom: 3rem;
+}
+
+.recent
+{
+    width: 90%;
+    max-width: 700px;
+    margin: auto;   
+    ul{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 1.4rem 0;
+        h2{
+            font-weight: 300;
+            font-size: 1.3rem;
+        }
+        a{
+            color: rgb(92, 92, 92);
+        }
+    }
+
+    .other
+    {
+        display: flex;
+        gap: 30px;
+        @media screen and(max-width:630px) {
+            flex-direction: column;
+        }
+    }
+
+    .other_article
+    {
+        max-width: 250px;
+        img{
+            height: 150px;
+            width: 250px;
+            object-fit: cover;
+        }
+        h2{
+            font-size: 1.1rem;
+            color: crimson;
+            padding: 1rem 0;
+        }
+    }
+    padding-bottom: 4rem;
+}
