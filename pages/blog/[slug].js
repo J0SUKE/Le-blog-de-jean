@@ -24,7 +24,7 @@ export async function getStaticPaths() {
     
     return {
       paths,
-      fallback: true 
+      fallback: 'blocking'
     };
   }
 
@@ -55,7 +55,8 @@ export async function getStaticProps({params}) {
       return{
         props:{
           articles:[...article,allArticles[allArticles.length-1],allArticles[allArticles.length-2]]
-        }
+        },
+        revalidate: 10, 
       }  
     }
 
@@ -63,7 +64,8 @@ export async function getStaticProps({params}) {
       return{
         props:{
           articles:[...article,allArticles[0]]
-        }
+        },
+        revalidate: 10,
       }  
     }
 
@@ -72,7 +74,8 @@ export async function getStaticProps({params}) {
       return{
         props:{
           articles:[...article]
-        }
+        },
+        revalidate: 10,
       }  
     }
 
