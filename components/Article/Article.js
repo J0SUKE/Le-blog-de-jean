@@ -8,7 +8,7 @@ import BlogLayout from '../BlogLayout/BlogLayout';
 import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
-  console.log(articles);
+
   return (  
   <BlogLayout>
       
@@ -22,15 +22,15 @@ export default function Article({articles}) {
         <div className={styles.article}>
           <span className={styles.date}>
             <Moment format="DD MMM YYYY">
-                {articles[1].attributes.createdAt}
+                {articles && articles[0].attributes.createdAt}
             </Moment>
           </span>
           
-          <h1>{articles[1].attributes.title}</h1>    
+          <h1>{articles && articles[0].attributes.title}</h1>    
           <article>
             <img src={getStrapiMedia(articles[0].attributes.image)} alt="" className={styles.illustration}/>
             <ReactMarkdown skipHtml={false} rehypePlugins={[rehypeRaw]} >
-              {articles[1].attributes.content}
+              {articles && articles[0].attributes.content}
             </ReactMarkdown>                      
           </article>
       </div>
@@ -42,21 +42,21 @@ export default function Article({articles}) {
             <a>See all</a>
           </Link>
         </ul>
-        {/* <section className={styles.other}>
+        <section className={styles.other}>
           {
-            articles.length ==3 ?
+            articles?.length ==3 ?
               <>
-                <OtherArticle article={articles[1]}/>
-                <OtherArticle article={articles[2]}/>
+                <OtherArticle article={articles && articles[1]}/>
+                <OtherArticle article={articles && articles[2]}/>
               </>
             :
-            articles.length ==2 ?
-            <OtherArticle article={articles[1]}/>
+            articles?.length ==2 ?
+            <OtherArticle article={articles && articles[1]}/>
             :
             null
           }
           
-        </section> */}
+        </section>
       </section>
   </BlogLayout>
     
