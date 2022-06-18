@@ -8,7 +8,7 @@ import BlogLayout from '../BlogLayout/BlogLayout';
 import {getStrapiMedia}  from '../../lib/media';
 
 export default function Article({articles}) {
-  
+  console.log(articles);
   return (  
   <BlogLayout>
       
