@@ -7,6 +7,7 @@ import Link from 'next/link';
 import BlogLayout from '../BlogLayout/BlogLayout';
 import {getStrapiMedia}  from '../../lib/media';
 import Head from 'next/head';
+import Comments from '../Comments/Comments.js';
 
 
 export default function Article({articles}) {
@@ -63,6 +64,7 @@ export default function Article({articles}) {
           
         </section>
       </section>
+      <Comments comments={articles[0].attributes.comments.data}/>
   </BlogLayout>
     
   )
