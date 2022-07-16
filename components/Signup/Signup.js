@@ -4,6 +4,8 @@ import {createUserWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../../Firebase/firebase-config';
 import {Usercontext} from '../../context/UserContext';
 import { useContext } from 'react';
+import { doc, setDoc } from "firebase/firestore"; 
+import { db } from '../../Firebase/firebase-config';
 
 export default function Signup() {
     
@@ -21,8 +23,19 @@ export default function Signup() {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            setUser(user);
+            //console.log(user);  
+            const id = user.uid;
+            
             // ...
+            setDoc(doc(db, "users", `${id}`), {
+                email:user.email,
+                username:username.current.value
+            });
+
+            setUser({
+                ...user,
+                username:username.current.value
+            });
         })
         .catch((error) => {
             const errorCode = error.code;

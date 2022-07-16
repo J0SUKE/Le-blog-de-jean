@@ -17,7 +17,6 @@ export default function UserContext({children}) {
         const usr = localStorage.getItem('user');
         
         if (usr) {
-            console.log(JSON.parse(usr));
             setuser(JSON.parse(usr));
         }
     },[])
