@@ -40,6 +40,7 @@ export default function Comments({comments,slug}) {
                                         content={content} 
                                         color={color}
                                         setComments_list={setComments_list}
+                                        slug={slug}
                                     />
                         })
                     }
@@ -52,18 +53,16 @@ export default function Comments({comments,slug}) {
 }
 
 // un commentaire individuel
-function Comment({username,time,content,color,id,setComments_list}) {
+function Comment({username,time,content,color,id,setComments_list,slug}) {
     
-    const edit_btn = useRef();
-    
-    const actions = useRef(['Modifier','Supprimer']);// actions of the menu
-    
-    const [action,setAction] = useState(); // last selected action 
+    const edit_btn = useRef();    
     
     const {user} = useContext(Usercontext);
+    const [action,setAction] = useState();
+
 
     function deleteComment() {
-        deleteDoc(doc(db, "comments", `${id}`))
+        deleteDoc(doc(db, `comments/${slug}/comments`, `${id}`))
         .then(()=>{
             setComments_list(comment=>comment.filter(item=>item.id!=id));
         })
@@ -72,8 +71,14 @@ function Comment({username,time,content,color,id,setComments_list}) {
         })
     }
 
+    function editComment() {
+        
+    }
+
+    const actions = useRef(['Modifier','Supprimer']);// actions of the menu    
+
+
     useEffect(()=>{
-        console.log(action);
         if (action==actions.current[1]) {
             deleteComment();
         }
@@ -98,12 +103,12 @@ function Comment({username,time,content,color,id,setComments_list}) {
             {
                 user && username==user.username &&
                 <div className={style.edit}>
-                    <div className={`${style.edit_btn} menu_toggler`} ref={edit_btn}>
-                        <img src="/images/dots.svg" alt=""/>
+                    <div className={`${style.edit_btn} menu_toggler`}>
+                        <img src="/images/dots.svg" alt="" ref={edit_btn}/>
                         <Menu  
                             toggler={edit_btn} 
                             options={actions.current} 
-                            setState={setAction}
+                            setAction={setAction}
                         />
                     </div>                                            
                 </div>
