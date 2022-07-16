@@ -15,6 +15,7 @@
 
     ul{
         display: flex;
+        align-items: center;
         li{
             margin-right: 2rem;
         }
@@ -36,5 +37,17 @@
         @media screen and(max-width:520px) {
             p,img{display: none;}
         }
+    }
+
+    .userLink
+    {
+        text-transform: uppercase;
+        height: 30px;
+        width: 30px;
+        border-radius: 50%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
     }
 }

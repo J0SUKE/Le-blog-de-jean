@@ -12,7 +12,6 @@ import Comments from '../Comments/Comments.js';
 
 export default function Article({articles,comments}) {
 
-  console.log(comments);
   return (  
   <BlogLayout>
       <Head>

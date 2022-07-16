@@ -19,12 +19,14 @@ export default function Header({scrollbarWidth}) {
             </Link>
             <ul>
                 <li><Link href='/blog'><a>Blog</a></Link></li>
-                <li><Link href='/login'><a>Se connecter</a></Link></li>
+                <li><Link href='/contact'><a>Contact</a></Link></li>
                 {
-                  user &&
-                  <div>
+                  user ?
+                  <div className={styles.userLink} style={{background:user.color}}>
                     {user.email[0]}
                   </div>
+                  :
+                  <li><Link href='/login'><a>Se connecter</a></Link></li>
                 }
                 
             </ul>

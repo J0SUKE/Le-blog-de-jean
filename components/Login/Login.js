@@ -4,6 +4,9 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../../Firebase/firebase-config';
 import { useRef,useContext } from 'react';
 import {Usercontext} from '../../context/UserContext';
+import { doc, getDoc } from "firebase/firestore";
+import { db } from '../../Firebase/firebase-config';
+
 
 export default function Login() {
     
@@ -20,8 +23,23 @@ export default function Login() {
         .then((userCredential) => {
             // Signed in 
             const user = userCredential.user;
-            setUser(user);
-            console.log(user);
+
+            const userDoc = doc(db, "users", `${user.uid}`);
+            
+            getDoc(userDoc)
+            .then((resp)=>{
+                if (resp.exists()) 
+                {
+                    setUser({
+                        ...user,
+                        username:resp.data().username,
+                        color:resp.data().color,
+                    })
+                }
+            }).catch(error=>{
+                console.log(error);
+            })
+        
             // ...
         })
         .catch((error) => {

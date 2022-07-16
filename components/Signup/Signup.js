@@ -6,6 +6,7 @@ import {Usercontext} from '../../context/UserContext';
 import { useContext } from 'react';
 import { doc, setDoc } from "firebase/firestore"; 
 import { db } from '../../Firebase/firebase-config';
+import getColor from '../../utils/colors';
 
 export default function Signup() {
     
@@ -27,15 +28,24 @@ export default function Signup() {
             const id = user.uid;
             
             // ...
+
+            let color = getColor();
+
             setDoc(doc(db, "users", `${id}`), {
                 email:user.email,
-                username:username.current.value
+                username:username.current.value,
+                color:color
+            }).then(()=>{
+                setUser({
+                    ...user,
+                    username:username.current.value,
+                    color:color
+                });
+            }).catch((error)=>{
+                console.log(error.code);
             });
 
-            setUser({
-                ...user,
-                username:username.current.value
-            });
+            
         })
         .catch((error) => {
             const errorCode = error.code;
