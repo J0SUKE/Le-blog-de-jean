@@ -7,8 +7,6 @@ import Typewriter from 'typewriter-effect';
 
 
 export default function Home({about}) {
-  console.log(about);
-
   return (
     <>
         <>

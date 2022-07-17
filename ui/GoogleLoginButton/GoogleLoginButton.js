@@ -17,7 +17,6 @@ export default function GoogleLoginButton() {
         signInWithPopup(auth, provider)
         .then((result) => {
             const user = result.user;
-            console.log(user);
 
             setDoc(doc(db, "users", `${user.uid}`), {
                 email:user.email,

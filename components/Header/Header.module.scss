@@ -20,7 +20,18 @@
             margin-right: 2rem;
             &:hover
             {
-                color: rgb(58, 213, 58);
+                color: rgb(141, 227, 55);
+            }
+        }
+        button{
+            background: none;
+            color: white;
+            outline: none;
+            font-size: 1rem;
+            cursor: pointer;
+            &:hover
+            {
+                color: rgb(141, 227, 55);
             }
         }
     }

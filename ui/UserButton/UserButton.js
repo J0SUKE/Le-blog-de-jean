@@ -18,9 +18,7 @@ export default function UserButton() {
     }
 
     useEffect(()=>{
-        console.log(action);
         if (action==actions.current[0]) {
-            console.log('logout');
             logout();    
         }        
     },[action])

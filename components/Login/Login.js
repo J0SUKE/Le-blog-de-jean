@@ -3,16 +3,19 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import {auth} from '../../Firebase/firebase-config';
 import { useRef,useContext } from 'react';
 import {Usercontext} from '../../context/UserContext';
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc,collection, query, where, getDocs } from "firebase/firestore";
 import { db } from '../../Firebase/firebase-config';
 import { logsinModaleContext } from '../../context/LogModaleContext';
 import ModaleLayout from '../ModaleLayout/ModaleLayout';
 import GoogleLoginButton from '../../ui/GoogleLoginButton/GoogleLoginButton';
+import { useState } from 'react';
 
 export default function Login() {
     
     const {setUser} = useContext(Usercontext);
     const {setModale} = useContext(logsinModaleContext);
+    const [errorMessage,setErrorMessage] = useState(null);
+    const [loading,setLoading] = useState(false);
 
     const email = useRef();
     const password = useRef();
@@ -20,7 +23,19 @@ export default function Login() {
     function loguser(e) {
         
         e.preventDefault();
-        
+        setLoading(true);
+
+        if (email.current.value.length==0) {
+            setErrorMessage('Veuillez saisir une adresse email');
+            setLoading(false);
+            return;
+        }
+        if (password.current.value.length==0) {
+            setErrorMessage('Veuillez saisir un mot de passe');
+            setLoading(false);
+            return;
+        }
+
         signInWithEmailAndPassword(auth, email.current.value, password.current.value)
         .then((userCredential) => {
             // Signed in 
@@ -37,17 +52,30 @@ export default function Login() {
                         username:resp.data().username,
                         color:resp.data().color,
                     })
+                    setModale(null);
                 }
             }).catch(error=>{
                 console.log(error);
+                setLoading(false);
             })
         
             // ...
         })
         .catch((error) => {
             const errorCode = error.code;
-            const errorMessage = error.message;
-
+            if (errorCode=='auth/wrong-password') {
+                setErrorMessage('Mot de passe incorrect');
+            }            
+            if (errorCode=='auth/user-not-found') {
+                setErrorMessage('Utilisateur introuvable');
+            }
+            if (errorCode=='auth/invalid-email') {
+                setErrorMessage('Adresse email invalide');
+            }
+            if (errorCode=='auth/internal-error') {
+                setErrorMessage('Une erreur est survenue');
+            }
+            setLoading(false);
             console.log(errorCode);
         });
     }
@@ -70,9 +98,17 @@ export default function Login() {
                     <label htmlFor="">Mot de passe</label>
                     <input type="password" ref={password}/>
                 </div>
+                {
+                    errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
+                }
                 <button>Mot de passe oublié ?</button>
-                <section className={style.submit}>
-                    <input type="submit" value={'se connecter'}/>
+                <section className={`${style.submit} ${loading ? style.loading : ''}`}>                    
+                    {
+                        loading ?
+                        <div className={style.lds_dual_ring}></div>
+                        :
+                        <input type="submit" value={'se connecter'}/>
+                    }
                 </section>
                 <section className={style.ssr}>
                     <span>Ou alors</span>

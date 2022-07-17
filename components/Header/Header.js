@@ -3,13 +3,14 @@ import styles from './Header.module.scss';
 import Link from 'next/dist/client/link';
 import {Usercontext} from '../../context/UserContext';
 import { useContext } from 'react';
-import Image from 'next/image';
 import UserButton from '../../ui/UserButton/UserButton';
+import {logsinModaleContext} from '../../context/LogModaleContext';
 
 export default function Header({scrollbarWidth}) {
   
   const {user} = useContext(Usercontext);
-  
+  const {setModale} = useContext(logsinModaleContext);
+
   return (
     <header>
         <div className={styles.header} style={{width: `calc(100% - ${scrollbarWidth}px)`}}>
@@ -26,7 +27,7 @@ export default function Header({scrollbarWidth}) {
                   user ?
                   <UserButton/>                  
                   :
-                  <li><Link href='/login'><a>Se connecter</a></Link></li>
+                  <button onClick={()=>{setModale('login')}}>Se connecter</button>
                 }
                 
             </ul>

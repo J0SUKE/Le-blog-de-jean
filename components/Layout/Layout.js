@@ -33,11 +33,6 @@ export default function Layout({children}) {
             <Head>
                 <link rel="icon" type="image/x-icon" href="favicon.svg"/>
             </Head>
-            <Header scrollbarWidth={scrollbarWidth}/>
-            <main className={styles.parallax_wrapper} ref={parallax}>
-                {children}
-                <Footer/>
-            </main>
             {
                 modale=='login' ?
                 <Login/>
@@ -47,6 +42,11 @@ export default function Layout({children}) {
                 :
                 null
             }
+            <Header scrollbarWidth={scrollbarWidth}/>
+            <main className={styles.parallax_wrapper} ref={parallax}>
+                {children}
+                <Footer/>
+            </main>            
         </>
   )
 }
