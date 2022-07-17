@@ -66,7 +66,7 @@ export default function Login() {
           <p>Pas encore inscrit ?</p>
           <Link href={'/signup'}>
             <a>
-                <button>S'inscrire</button>
+                <button>S&apos;inscrire</button>
             </a>
           </Link>
       </main>

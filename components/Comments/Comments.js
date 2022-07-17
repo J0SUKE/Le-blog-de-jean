@@ -13,7 +13,8 @@ export default function Comments({slug}) {
     const sort_btn = useRef();
     
     const [comments_list,setComments_list] = useState([]);
-    const [etat,setEtat] = useState();
+    const sorts = useRef(['Le plus ancien','Le plus récent'])
+    const [sort,setSort] = useState(sorts.current[1]);
 
     function getComments() {
         //get the comments from Firebase
@@ -35,6 +36,16 @@ export default function Comments({slug}) {
         getComments();// load the comments from the database
     },[])
 
+    useEffect(()=>{
+        if (sort==sorts.current[0]) // Le plus ancien
+        {
+            setComments_list(comments_list=>comments_list.sort((a,b)=>-a.time+b.time))
+        }
+        else // par défault le plus récent
+        {
+            setComments_list(comments_list=>comments_list.sort((a,b)=>a.time-b.time))
+        }
+    },[sort])
 
     return (
     <section className={style.comments_container}>
@@ -42,11 +53,13 @@ export default function Comments({slug}) {
             <h2>Commentaires</h2>
             <div className={style.comments_sort}>
                 <p>Trier par : </p>
-                <span ref={sort_btn}>Plus récents</span>
-                <Menu toggler={sort_btn} options={['Le plus ancien','Le plus récent']} setState={setEtat}/>
+                <span ref={sort_btn}>{sort}
+                    <img src="/images/angle-down.svg" alt="" />
+                </span>
+                <Menu toggler={sort_btn} options={sorts.current} setAction={setSort}/>
             </div>
         </div>
-        <AddComment slug={slug}  setComments={setComments_list}/>
+        <AddComment slug={slug}  setComments={setComments_list} sort={sort} sorts={sorts}/>
         {
             comments_list.length>0 &&
             <div className={style.comments_list}>
@@ -139,7 +152,7 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
 }
 
 // la zone ou on ajoute un commentaire
-function AddComment({slug,setComments}) {
+function AddComment({slug,setComments,sort,sorts}) {
     
     const {user} = useContext(Usercontext);
     
@@ -159,7 +172,14 @@ function AddComment({slug,setComments}) {
 
         // ajoute le comm a la database
         addDoc(collection(db, `comments/${slug}/comments`), commentData).then((docRef)=>{
-            setComments(comments=>[{...commentData,id:docRef.id},...comments])
+            if (sort==sorts.current[0]) {
+                setComments(comments=>[...comments,{...commentData,id:docRef.id}])
+            }
+            else
+            {
+                setComments(comments=>[{...commentData,id:docRef.id},...comments])
+            }
+            
         })
 
         // toggle la zone de validation et clear le input
