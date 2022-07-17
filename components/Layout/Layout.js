@@ -4,22 +4,30 @@ import styles from './Layout.module.scss';
 import { useRouter } from 'next/router'
 import Footer from '../Footer/Footer';
 import Head from 'next/head';
+import { logsinModaleContext } from '../../context/LogModaleContext';
+import { useContext } from 'react';
+import Login from '../Login/Login';
+import SignUp from '../Signup/Signup'
 
 
 export default function Layout({children}) {
   
+    // routing
     const router = useRouter()
     useEffect(()=>{
         parallax.current.scrollTo(0,0);
     },[router.asPath])
     
+    //layout
     const parallax = useRef();
     const [scrollbarWidth,setscrollbarWidth] = useState(0);
-
     useEffect(()=>{
         setscrollbarWidth(parallax.current.offsetWidth - parallax.current.clientWidth);
     },[])
-  
+
+    //login modale
+    const {modale} = useContext(logsinModaleContext);
+
     return (
         <>
             <Head>
@@ -30,6 +38,15 @@ export default function Layout({children}) {
                 {children}
                 <Footer/>
             </main>
+            {
+                modale=='login' ?
+                <Login/>
+                :
+                modale=='signup' ?
+                <SignUp/>
+                :
+                null
+            }
         </>
   )
 }

@@ -3,6 +3,8 @@ import styles from './Header.module.scss';
 import Link from 'next/dist/client/link';
 import {Usercontext} from '../../context/UserContext';
 import { useContext } from 'react';
+import Image from 'next/image';
+import UserButton from '../../ui/UserButton/UserButton';
 
 export default function Header({scrollbarWidth}) {
   
@@ -22,9 +24,7 @@ export default function Header({scrollbarWidth}) {
                 <li><Link href='/contact'><a>Contact</a></Link></li>
                 {
                   user ?
-                  <div className={styles.userLink} style={{background:user.color}}>
-                    {user.email[0]}
-                  </div>
+                  <UserButton/>                  
                   :
                   <li><Link href='/login'><a>Se connecter</a></Link></li>
                 }

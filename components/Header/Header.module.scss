@@ -13,10 +13,10 @@
     color: white;
     padding: 0 1rem;
 
-    ul{
+    &>ul{
         display: flex;
         align-items: center;
-        li{
+        &>li{
             margin-right: 2rem;
             &:hover
             {
@@ -53,5 +53,10 @@
         justify-content: center;
         align-items: center;
         cursor: pointer;
+        img{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+        }
     }
 }

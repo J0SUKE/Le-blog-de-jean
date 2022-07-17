@@ -6,6 +6,8 @@ import { collection, addDoc,doc, deleteDoc, query, getDocs,orderBy  } from "fire
 import {db} from '../../Firebase/firebase-config';
 import Menu from '../../ui/Menu/Menu';
 import { useEffect } from 'react';
+import {logsinModaleContext} from '../../context/LogModaleContext';
+import Image from 'next/image';
 
 // List de tout les commentaires
 export default function Comments({slug}) {
@@ -15,10 +17,11 @@ export default function Comments({slug}) {
     const [comments_list,setComments_list] = useState([]);
     const sorts = useRef(['Le plus ancien','Le plus récent'])
     const [sort,setSort] = useState(sorts.current[1]);
+    const [errorMessage,setErrorMessage] = useState(null);
 
-    function getComments() {
+    function getComments(order) {
         //get the comments from Firebase
-        const q = query(collection(db, `comments/${slug}/comments`),orderBy("time", "desc"));
+        const q = query(collection(db, `comments/${slug}/comments`),orderBy("time", order));
         let comms = [];
 
         getDocs(q)
@@ -27,23 +30,26 @@ export default function Comments({slug}) {
             {
                 comms.push({...doc.data(),id:doc.id});
             });
-            setComments_list(comms);            
+            setComments_list(comms);     
+        }).catch((error)=>{
+            console.log(error);
+            setErrorMessage('Une erreur est survenue');
         })
         
     }
 
     useEffect(()=>{
-        getComments();// load the comments from the database
+        getComments("desc");// load the comments from the database
     },[])
 
     useEffect(()=>{
         if (sort==sorts.current[0]) // Le plus ancien
         {
-            setComments_list(comments_list=>comments_list.sort((a,b)=>-a.time+b.time))
+            getComments("asc")
         }
         else // par défault le plus récent
         {
-            setComments_list(comments_list=>comments_list.sort((a,b)=>a.time-b.time))
+            getComments("desc")
         }
     },[sort])
 
@@ -56,7 +62,12 @@ export default function Comments({slug}) {
                 <span ref={sort_btn}>{sort}
                     <img src="/images/angle-down.svg" alt="" />
                 </span>
-                <Menu toggler={sort_btn} options={sorts.current} setAction={setSort}/>
+                <Menu 
+                    toggler={sort_btn} 
+                    options={sorts.current} 
+                    setAction={setSort} 
+                    state={sort} 
+                />
             </div>
         </div>
         <AddComment slug={slug}  setComments={setComments_list} sort={sort} sorts={sorts}/>
@@ -65,7 +76,7 @@ export default function Comments({slug}) {
             <div className={style.comments_list}>
                 <ul>
                     {
-                        comments_list.map(({user,content,time,id,color})=>{
+                        comments_list.map(({user,content,time,id,color,photo})=>{
                             return <Comment  
                                         key={id} 
                                         id={id}
@@ -73,21 +84,28 @@ export default function Comments({slug}) {
                                         time={time} 
                                         content={content} 
                                         color={color}
+                                        photo={photo}
                                         setComments_list={setComments_list}
                                         slug={slug}
                                     />
                         })
                     }
-                </ul>
+                </ul>                
             </div>
         }
-        
+        {
+            errorMessage && 
+            <div className={style.errorMessage}>
+                <p>{errorMessage}</p>
+            </div>
+        }
+
     </section>
   )
 }
 
 // un commentaire individuel
-function Comment({username,time,content,color,id,setComments_list,slug}) {
+function Comment({username,time,content,color,photo,id,setComments_list,slug}) {
     
     // id : id du documments dans la bdd
 
@@ -119,9 +137,21 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
 
     return (
         <li className={style.comment}>
-            <div className={style.comment__left} style={{background:color}}>
-                <p>{username[0]}</p>
-            </div>
+            {
+                photo ?
+                <div className={style.comment__left}>
+                    <Image
+                        src={photo}
+                        width={40}
+                        height={40}
+                    />
+                </div>
+                :
+                <div className={style.comment__left} style={{background:color}}>
+                    <p>{username[0]}</p>
+                </div>
+            }
+            
             <div className={style.comment__right}>
                 <p>{username}</p>
                 <span>
@@ -155,7 +185,8 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
 function AddComment({slug,setComments,sort,sorts}) {
     
     const {user} = useContext(Usercontext);
-    
+    const {setModale} = useContext(logsinModaleContext);
+
     const comment = useRef();
     const [commenting,setCommenting] = useState(false); // pour toggle la zone des boutons
 
@@ -163,19 +194,29 @@ function AddComment({slug,setComments,sort,sorts}) {
     function publishComment(e) {
         e.preventDefault();
 
+        if (!user) {
+            setModale('login');
+            return;
+        }
+
+
+
         let commentData = {
             user: user.username,
             content:comment.current.value,
             time:new Date().getTime(),
-            color:user.color,
         }
+
+        if (user.color) commentData.color = user.color;
+        else commentData.photo = user.photo;
 
         // ajoute le comm a la database
         addDoc(collection(db, `comments/${slug}/comments`), commentData).then((docRef)=>{
-            if (sort==sorts.current[0]) {
+            if (sort==sorts.current[0]) // Plus ancien ==> le dernier com est en bas ==> dernier du tableau
+            {
                 setComments(comments=>[...comments,{...commentData,id:docRef.id}])
             }
-            else
+            else// Plus récent ==> le dernier com est en haut ==> premier du tableau
             {
                 setComments(comments=>[{...commentData,id:docRef.id},...comments])
             }
@@ -193,9 +234,18 @@ function AddComment({slug,setComments,sort,sorts}) {
             <div className={style.write_a_comments__left}>
                 {
                     user?
-                    <div style={{background:user.color}}>
-                        {user.email[0]}
-                    </div>
+                    (
+                        user.photo ?
+                        <Image
+                            src={user.photo}
+                            width={40}
+                            height={40}
+                        />
+                        :
+                        <div style={{background:user.color}}>
+                            {user.username[0]}
+                        </div>
+                    )
                     :
                     <img src="/images/user.svg" alt="" />
                 }

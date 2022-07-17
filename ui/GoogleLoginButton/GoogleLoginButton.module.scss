@@ -1,0 +1,22 @@
+.button{
+    width: 100%;
+    padding: .7rem;
+    border: none;
+    outline: none;
+    background: #4285F4;
+    color: white;
+    font-size: 1rem;
+    position: relative;
+    cursor: pointer;
+    &:hover
+    {
+        opacity: 0.7;
+    }
+    img{
+        width: 20px;
+        position: absolute;
+        left: 1rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+}

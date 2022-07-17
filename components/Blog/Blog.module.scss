@@ -9,6 +9,14 @@
         text-align: center;
         font-size:2rem;
     }
+    .buttonContainer
+    {
+        width: 85%;
+        max-width: 1200px;
+        margin: 0 auto 3rem auto;
+        display: flex;
+        justify-content: flex-end;
+    }
 }
 
 .feed

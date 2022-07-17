@@ -6,9 +6,15 @@ import rehypeRaw from "rehype-raw";
 import ReactMarkdown from 'react-markdown';
 import BlogLayout from '../BlogLayout/BlogLayout';
 import Head from 'next/head';
+import LoginSignUpButton from '../../ui/LoginSignUpButton/LoginSignUpButton';
+import { Usercontext } from '../../context/UserContext';
+import { useContext } from 'react';
+import UserButton from '../../ui/UserButton/UserButton';
 
 export default function Blog({articles}) {
-  
+
+  const {user} = useContext(Usercontext);
+
   return (
     <BlogLayout>
         <Head>
@@ -17,6 +23,16 @@ export default function Blog({articles}) {
       </Head>
       <section className={styles.content}>
           <h2>Mes articles</h2>
+          <div className={styles.buttonContainer}>
+            {
+              user ?
+              <UserButton/>
+              :
+              <LoginSignUpButton/>
+            }
+            
+          </div>
+          
           <section className={styles.feed}>
             <GalleryColumn articles={articles.filter((element,index)=>(index)%3==0)}/> 
             <GalleryColumn articles={articles.filter((element,index)=>(index)%3==1)}/> 

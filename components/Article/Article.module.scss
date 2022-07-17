@@ -11,6 +11,12 @@
         width: 80%;
         max-width: 700px;
         margin: auto;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        a:hover{
+            opacity: 0.7;
+        }
     }
 }
 

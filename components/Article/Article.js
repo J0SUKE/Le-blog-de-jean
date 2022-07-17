@@ -8,10 +8,15 @@ import BlogLayout from '../BlogLayout/BlogLayout';
 import {getStrapiMedia}  from '../../lib/media';
 import Head from 'next/head';
 import Comments from '../Comments/Comments.js';
-
+import LoginSignUpButton from '../../ui/LoginSignUpButton/LoginSignUpButton';
+import { Usercontext } from '../../context/UserContext';
+import { useContext } from 'react';
+import UserButton from '../../ui/UserButton/UserButton';
 
 export default function Article({articles}) {
 
+  const {user} = useContext(Usercontext);
+  
   return (  
   <BlogLayout>
       <Head>
@@ -23,6 +28,12 @@ export default function Article({articles}) {
           <Link href="/blog">
             <a>Tout les articles</a>
           </Link>
+          {
+              user ?
+              <UserButton/>
+              :
+              <LoginSignUpButton/>
+            }
         </div>
         
         <div className={styles.article}>

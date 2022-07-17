@@ -5,13 +5,22 @@
     width: 200px;
     padding: .5rem 0;
     border: 1px solid darkgray;
-    box-shadow: 0 0 10px darkgray;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.293);
     background: white;
     li{
         padding: .5rem;
+        //margin-right: 0;
         cursor: pointer;
+        font-size: 1rem;
+        font-weight: 400;
+        color: rgb(21, 21, 21);
+        width: 100%;
         
         &:hover
+        {
+            background: rgb(235, 235, 235);
+        }
+        &.selected
         {
             background: lightgray;
         }

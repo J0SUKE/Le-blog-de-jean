@@ -1,0 +1,156 @@
+.container
+{
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 2000;
+    background: white;
+    height: 100vh;
+    width: 100vw;
+    overflow-y: auto;
+    &__top
+    {
+        width: 90%;
+        max-width: 1200px;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: auto;
+        padding-top: 2rem ;
+        button{
+            background: transparent;
+            border: none;
+            outline: none;
+            font-size: 3.5rem;
+            font-weight: 200;
+            transform: rotate(45deg);
+            cursor: pointer;
+        }
+    }
+}
+
+.content
+{
+    width: 90%;
+    max-width: 1200px;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    &>h1{
+        font-size: 3rem;
+        color: #303030;
+    }
+
+    &>div{
+        display: flex;
+        gap: .5rem;
+        p{
+            font-size: 1.3rem;
+            font-weight: 600;
+            color: #303030;
+        }
+        button{
+            background: none;
+            outline: none;
+            border: none;
+            color: rgb(141, 227, 55);
+            font-size: 1.3rem;
+            font-weight: 600;
+            cursor: pointer;
+        }
+    }
+
+    form{
+        width: 100%;
+        max-width: 350px;
+        margin-top: 1rem;
+        &>div{
+            display: flex;
+            flex-direction: column;
+            margin: 1rem 0;
+            input{
+                border: none;
+                border-bottom: 1px solid darkgray;
+                outline: none;
+                font-size: 1.2rem;
+                font-weight: 500;
+                padding-bottom: .2rem;
+                &:focus
+                {
+                    border-bottom: 1px solid rgb(141, 227, 55);
+                }
+            }
+            label{
+                font-weight: 600;
+                font-size: 1.3rem;
+                color: #606060;
+            }
+        }
+        .submit
+        {
+            width: 100%;
+            background: rgb(141, 227, 55);
+            color: white;
+            
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            &:hover
+            {
+                opacity: .7;
+            }
+            input{
+                background: transparent;
+                border: none;
+                outline: none;
+                color: white;
+                font-size: 1.4rem;
+                width: 100%;
+                height: 100%;
+                padding: .5rem;
+                cursor: pointer;
+            }
+        }
+
+        &>button{
+            background: none;
+            border: none;
+            outline: none;
+            margin-top: 2rem;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            font-weight: 600;
+            text-decoration: underline;
+            cursor: pointer;
+            &:hover
+            {
+                opacity: .8;
+            }
+        }
+
+        .ssr
+        {
+            margin-top: 3rem;
+            position: relative;
+            border-top: 1px solid darkgray;
+            span{
+                display: block;
+                position: absolute;
+                white-space: nowrap;
+                background: white;
+                line-height: 2rem;
+                font-size: 1.2rem;
+                left: 50%;
+                font-weight: 600;
+                transform: translate(-50%,-1rem);
+                padding: 0 .4rem;
+                color: #303030;
+            }
+            button{
+                margin-top: 2rem;
+            }
+        }
+    }
+}

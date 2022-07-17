@@ -63,6 +63,9 @@
         align-items: center;
         color: white;
         font-size: 20px;
+        img{
+            border-radius: 50%;
+        }
     }
     &__right
     {
@@ -156,6 +159,7 @@
         border-radius: 50%;
         font-size: 20px;
         display: flex;
+        overflow: hidden;
         justify-content: center;
         align-items: center;    
         color: white;
@@ -181,3 +185,8 @@
         }
     }
 }
+
+.errorMessage
+    {
+        text-align: center;
+    }

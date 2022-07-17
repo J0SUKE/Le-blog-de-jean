@@ -2,7 +2,7 @@ import React, { useEffect,useState } from 'react'
 import { useRef } from 'react';
 import styles from './Menu.module.scss';
 
-export default function Menu({toggler,options,setAction}) {
+export default function Menu({toggler,options,setAction,state=''}) {
    
   const [active,setActive] = useState(false);  
   const menuRef = useRef();
@@ -14,6 +14,7 @@ export default function Menu({toggler,options,setAction}) {
         setActive(active=>!active);        
     }
     let close = (e)=>{        
+        e.stopPropagation();
         setActive(false);
     }
 
@@ -49,6 +50,7 @@ export default function Menu({toggler,options,setAction}) {
                                             setActive(false);
                                             setAction(item);
                                         }}
+                                        className={state==item ? styles.selected : ''}
                                     >{item}</li>
                         })
                     }
