@@ -1,11 +1,9 @@
 import {fetchAPI} from '../../lib/api';
 import Article from '../../components/Article/Article';
-import { collection, query, getDocs,orderBy } from "firebase/firestore";
-import { db } from '../../Firebase/firebase-config';
 
-export default function ArticlePage({articles,comments}) {
+export default function ArticlePage({articles}) {
     
-    return <Article articles={articles} comments={comments}/>
+    return <Article articles={articles}/>
 }
 
 export async function getStaticPaths() {
@@ -53,22 +51,11 @@ export async function getStaticProps({params}) {
     allArticles=allArticles.data;
     article = article.data;
     
-    //get the comments from Firebase
-    const q = query(collection(db, `comments/${params.slug}/comments`),orderBy("time", "desc"));
-    let comments = [];
-
-    const querySnapshot = await getDocs(q);
-        querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-          comments.push({...doc.data(),id:doc.id});
-    });
-
 
     if (allArticles.length>=2) {
       return{
         props:{
-          articles:[...article,allArticles[allArticles.length-1],allArticles[allArticles.length-2]],
-          comments
+          articles:[...article,allArticles[allArticles.length-1],allArticles[allArticles.length-2]]
         },
         revalidate: 10, 
       }  
@@ -77,8 +64,7 @@ export async function getStaticProps({params}) {
     else if (allArticles.length==1) {
       return{
         props:{
-          articles:[...article,allArticles[0]],
-          comments
+          articles:[...article,allArticles[0]]
         },
         revalidate: 10,
       }  
@@ -88,8 +74,7 @@ export async function getStaticProps({params}) {
     {
       return{
         props:{
-          articles:[...article],
-          comments
+          articles:[...article]
         },
         revalidate: 10,
       }  

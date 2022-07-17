@@ -10,7 +10,7 @@ import Head from 'next/head';
 import Comments from '../Comments/Comments.js';
 
 
-export default function Article({articles,comments}) {
+export default function Article({articles}) {
 
   return (  
   <BlogLayout>
@@ -64,7 +64,7 @@ export default function Article({articles,comments}) {
           
         </section>
       </section>
-      <Comments comments={comments} slug={articles[0].attributes.slug}/>
+      <Comments slug={articles[0].attributes.slug}/>
   </BlogLayout>
     
   )

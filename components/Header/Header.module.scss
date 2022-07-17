@@ -18,6 +18,10 @@
         align-items: center;
         li{
             margin-right: 2rem;
+            &:hover
+            {
+                color: rgb(58, 213, 58);
+            }
         }
     }
 

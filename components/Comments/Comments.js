@@ -2,18 +2,39 @@ import React,{ useRef,useId,useContext,useState } from 'react';
 import style from './Comments.module.scss';
 import {Usercontext} from '../../context/UserContext';
 import Moment from 'react-moment';
-import { collection, addDoc,doc, deleteDoc  } from "firebase/firestore"; 
+import { collection, addDoc,doc, deleteDoc, query, getDocs,orderBy  } from "firebase/firestore"; 
 import {db} from '../../Firebase/firebase-config';
 import Menu from '../../ui/Menu/Menu';
 import { useEffect } from 'react';
 
 // List de tout les commentaires
-export default function Comments({comments,slug}) {
+export default function Comments({slug}) {
 
     const sort_btn = useRef();
     
-    const [comments_list,setComments_list] = useState(comments);
+    const [comments_list,setComments_list] = useState([]);
     const [etat,setEtat] = useState();
+
+    function getComments() {
+        //get the comments from Firebase
+        const q = query(collection(db, `comments/${slug}/comments`),orderBy("time", "desc"));
+        let comms = [];
+
+        getDocs(q)
+        .then((resp)=>{
+            resp.forEach((doc) => 
+            {
+                comms.push({...doc.data(),id:doc.id});
+            });
+            setComments_list(comms);            
+        })
+        
+    }
+
+    useEffect(()=>{
+        getComments();// load the comments from the database
+    },[])
+
 
     return (
     <section className={style.comments_container}>
@@ -25,7 +46,7 @@ export default function Comments({comments,slug}) {
                 <Menu toggler={sort_btn} options={['Le plus ancien','Le plus récent']} setState={setEtat}/>
             </div>
         </div>
-        <AddComment slug={slug}  setComments={setComments_list} comments={comments_list}/>
+        <AddComment slug={slug}  setComments={setComments_list}/>
         {
             comments_list.length>0 &&
             <div className={style.comments_list}>
@@ -55,6 +76,8 @@ export default function Comments({comments,slug}) {
 // un commentaire individuel
 function Comment({username,time,content,color,id,setComments_list,slug}) {
     
+    // id : id du documments dans la bdd
+
     const edit_btn = useRef();    
     
     const {user} = useContext(Usercontext);
@@ -62,6 +85,7 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
 
 
     function deleteComment() {
+        console.log('delete comment with id ',id);
         deleteDoc(doc(db, `comments/${slug}/comments`, `${id}`))
         .then(()=>{
             setComments_list(comment=>comment.filter(item=>item.id!=id));
@@ -71,15 +95,11 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
         })
     }
 
-    function editComment() {
-        
-    }
-
-    const actions = useRef(['Modifier','Supprimer']);// actions of the menu    
+    const actions = useRef(['Supprimer']);// actions of the menu    
 
 
     useEffect(()=>{
-        if (action==actions.current[1]) {
+        if (action==actions.current[0]) {
             deleteComment();
         }
     },[action])
@@ -119,7 +139,7 @@ function Comment({username,time,content,color,id,setComments_list,slug}) {
 }
 
 // la zone ou on ajoute un commentaire
-function AddComment({slug,setComments,comments}) {
+function AddComment({slug,setComments}) {
     
     const {user} = useContext(Usercontext);
     
@@ -134,18 +154,18 @@ function AddComment({slug,setComments,comments}) {
             user: user.username,
             content:comment.current.value,
             time:new Date().getTime(),
-            color:user.color
+            color:user.color,
         }
 
         // ajoute le comm a la database
-        addDoc(collection(db, `comments/${slug}/comments`), commentData);        
+        addDoc(collection(db, `comments/${slug}/comments`), commentData).then((docRef)=>{
+            setComments(comments=>[{...commentData,id:docRef.id},...comments])
+        })
 
         // toggle la zone de validation et clear le input
         setCommenting(false);   
         comment.current.value = '';
 
-        // ajoute le noueveau com a l'ui
-        setComments(comments=>[commentData,...comments])
     }
     
     return (

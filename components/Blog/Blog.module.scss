@@ -45,6 +45,11 @@
                 margin: 1rem 0;
             }
         }
+
+        &:hover
+        {
+            opacity: .6;
+        }
     }
 
     @media screen and(max-width:900px) {

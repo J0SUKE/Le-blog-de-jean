@@ -37,7 +37,7 @@ export default function Menu({toggler,options,setAction}) {
   return (
     <>
         {
-            active && !menuOpen &&
+            active &&
             <menu className={styles.menu} ref={menuRef}>
                 <ul>
                     {
