@@ -52,6 +52,7 @@ export default function GoogleLoginButton() {
     <button 
         className={style.button}
         onClick={googleSignIn}
+        type={'button'}
     >
         <img src="/images/google.svg" alt="" />
         Se connecter avec Google

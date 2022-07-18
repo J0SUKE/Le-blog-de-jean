@@ -58,6 +58,11 @@ export default function Signup() {
             setLoading(false);
             return false;
         }
+        if (username.current.value.length<3) {
+            setErrorMessage('Le nom d\'utlisateur doit contenir au moins 3 caractères');
+            setLoading(false);
+            return false;
+        }
         if (email.current.value.length==0) {
             setErrorMessage('Veuillez renseigner une adresse email');
             setLoading(false);
@@ -109,14 +114,18 @@ export default function Signup() {
             if (errorCode=='auth/email-already-in-use') {
                 setErrorMessage('Cette adresse email est déja utilisée')
             }
-            if (errorCode=='auth/invalid-email') {
+            else if (errorCode=='auth/invalid-email') {
                 setErrorMessage('Adresse email invalide');
             }
-            if (errorCode=='auth/internal-error') {
+            else if (errorCode=='auth/internal-error') {
                 setErrorMessage('Une erreur est survenue');
             }
-            if (errorCode=='auth/weak-password') {
+            else if (errorCode=='auth/weak-password') {
                 setErrorMessage('Votre mot de passe doit contenir au moins 6 caractères');
+            }
+            else 
+            {
+                setErrorMessage('Une erreur est survenue');
             }
             setLoading(false);
             // ..

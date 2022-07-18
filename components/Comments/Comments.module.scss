@@ -6,16 +6,25 @@
     &__top
     {
         display: flex;
+        width: 100%;
         justify-content: space-between;
         padding: 2rem 0;
         border-bottom: 1px solid rgb(195, 195, 195);
         h2{
             font-weight: 500;
         }
+
+        @media screen and(max-width:470px) {
+            flex-direction: column;
+            align-items: flex-start;
+            .comments_sort{
+                margin-top: 1rem;
+            }
+        }
     }
     .comments_sort
     {
-        display: flex;
+        display: inline-flex;
         position: relative;
         gap: 30px;
         cursor: pointer;
@@ -28,6 +37,10 @@
             align-items: center;
             img{
                 width: 25px;
+            }
+            &:hover
+            {
+                opacity: .6;
             }
         }
     }
@@ -89,10 +102,23 @@
                 display: none;
             }
         }
-        input[type="submit"]
+        .submit
         {
             background: crimson;
+            &.disabled
+            {
+                background: darkgray;
+                opacity: .8;
+                input:hover{
+                    opacity: 1;
+                    cursor: default;
+                }
+            }
+        }
+        input[type="submit"]
+        {
             color: white;
+            background: transparent;
             border: none;
             outline: none;
             padding: .3rem 1rem;

@@ -66,13 +66,14 @@ export default function Login() {
             if (errorCode=='auth/wrong-password') {
                 setErrorMessage('Mot de passe incorrect');
             }            
-            if (errorCode=='auth/user-not-found') {
+            else if (errorCode=='auth/user-not-found') {
                 setErrorMessage('Utilisateur introuvable');
             }
-            if (errorCode=='auth/invalid-email') {
+            else if (errorCode=='auth/invalid-email') {
                 setErrorMessage('Adresse email invalide');
             }
-            if (errorCode=='auth/internal-error') {
+            else 
+            {
                 setErrorMessage('Une erreur est survenue');
             }
             setLoading(false);

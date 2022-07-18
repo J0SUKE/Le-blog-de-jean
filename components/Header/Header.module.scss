@@ -16,8 +16,8 @@
     &>ul{
         display: flex;
         align-items: center;
+        gap: 2rem;
         &>li{
-            margin-right: 2rem;
             &:hover
             {
                 color: rgb(141, 227, 55);
@@ -27,6 +27,7 @@
             background: none;
             color: white;
             outline: none;
+            border: none;
             font-size: 1rem;
             cursor: pointer;
             &:hover

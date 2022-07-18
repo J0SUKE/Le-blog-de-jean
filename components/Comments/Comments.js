@@ -116,7 +116,6 @@ function Comment({username,time,content,color,photo,id,setComments_list,slug}) {
 
 
     function deleteComment() {
-        console.log('delete comment with id ',id);
         deleteDoc(doc(db, `comments/${slug}/comments`, `${id}`))
         .then(()=>{
             setComments_list(comment=>comment.filter(item=>item.id!=id));
@@ -187,9 +186,9 @@ function AddComment({slug,setComments,sort,sorts}) {
     const {user} = useContext(Usercontext);
     const {setModale} = useContext(logsinModaleContext);
 
-    const comment = useRef();
-    const [commenting,setCommenting] = useState(false); // pour toggle la zone des boutons
 
+    const [comment,setComment] = useState('');// controls the comment input
+    const [commenting,setCommenting] = useState(false); // pour toggle la zone des boutons
 
     function publishComment(e) {
         e.preventDefault();
@@ -199,11 +198,11 @@ function AddComment({slug,setComments,sort,sorts}) {
             return;
         }
 
-
+        if (comment.length==0) return; 
 
         let commentData = {
             user: user.username,
-            content:comment.current.value,
+            content:comment,
             time:new Date().getTime(),
         }
 
@@ -225,7 +224,7 @@ function AddComment({slug,setComments,sort,sorts}) {
 
         // toggle la zone de validation et clear le input
         setCommenting(false);   
-        comment.current.value = '';
+        setComment('');
 
     }
     
@@ -254,7 +253,13 @@ function AddComment({slug,setComments,sort,sorts}) {
             <div className={style.write_a_comments__right}>
                 <form onSubmit={publishComment}>
                     <div>
-                        <textarea type="text" placeholder='Ecrire un commentaire...' ref={comment} onClick={()=>setCommenting(true)}/>
+                        <textarea 
+                            type="text" 
+                            placeholder='Ecrire un commentaire...'  
+                            value={comment}
+                            onClick={()=>setCommenting(true)}
+                            onInput={(e)=>{setComment(e.target.value)}}
+                        />
                     </div>
                     {
                         commenting &&
@@ -262,11 +267,17 @@ function AddComment({slug,setComments,sort,sorts}) {
                             <button 
                                 onClick={()=>{
                                     setCommenting(false);
-                                    comment.current.value = '';
+                                    setComment('');
                                 }} 
                                 type='button'
                             >Annuler</button>
-                            <input type="submit" value='Publier'/>
+                            <div className={`${style.submit} ${comment.length==0 ? style.disabled : ''}`}>
+                                <input 
+                                    disabled={comment.length==0 ? true : false} 
+                                    type="submit" 
+                                    value='Publier'
+                                />
+                            </div>
                         </div>
                     }
                     
