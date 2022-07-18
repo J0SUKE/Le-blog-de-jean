@@ -52,29 +52,33 @@ export default function Article({articles}) {
           </article>
       </div>
       </section>
-      <section className={styles.recent}>
-        <ul>
-          <h2>Articles récents</h2>
-          <Link href="/blog">
-            <a>Tout les articles</a>
-          </Link>
-        </ul>
-        <section className={styles.other}>
-          {
-            articles?.length ==3 ?
-              <>
+      {
+        articles?.length>1 &&
+        <section className={styles.recent}>
+          <ul>
+            <h2>Articles récents</h2>
+            <Link href="/blog">
+              <a>Tout les articles</a>
+            </Link>
+          </ul>
+          <section className={styles.other}>
+              {
+                articles?.length ==3 ?
+                  <>
+                    <OtherArticle article={articles && articles[1]}/>
+                    <OtherArticle article={articles && articles[2]}/>
+                  </>
+                :
+                articles?.length ==2 ?
                 <OtherArticle article={articles && articles[1]}/>
-                <OtherArticle article={articles && articles[2]}/>
-              </>
-            :
-            articles?.length ==2 ?
-            <OtherArticle article={articles && articles[1]}/>
-            :
-            null
-          }
-          
+                :
+                null
+              }
+              
+          </section>
         </section>
-      </section>
+      }
+      
       <Comments slug={articles[0].attributes.slug}/>
   </BlogLayout>
     

@@ -5,13 +5,13 @@ import { GoogleAuthProvider } from "firebase/auth";
 
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAGKtQET6WOQtjfFJ-PqZdKdD814wP8-zY",
-  authDomain: "le-blog-de-jean.firebaseapp.com",
-  projectId: "le-blog-de-jean",
-  storageBucket: "le-blog-de-jean.appspot.com",
-  messagingSenderId: "1036676939581",
-  appId: "1:1036676939581:web:73e9b8683db1fede5a4f54",
-  measurementId: "G-SY8PNVZWQP"
+  apiKey: process.env.NEXT_PUBLIC_API_KEY,
+  authDomain: process.env.NEXT_PUBLIC_AUTH_DOMAIN,
+  projectId: process.env.NEXT_PUBLIC_PROJECT_ID,
+  storageBucket: process.env.NEXT_PUBLIC_STORAGE_BUCKET,
+  messagingSenderId: process.env.NEXT_PUBLIC_MESSAGING_ID,
+  appId: process.env.NEXT_PUBLIC_APP_ID,
+  measurementId: process.env.NEXT_PUBLIC_MEASUREMENT_ID
 };
 
 // Initialize Firebase
