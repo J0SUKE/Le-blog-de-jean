@@ -1,0 +1,55 @@
+.container
+{
+    height: 100vh;    
+    background: white;
+}
+
+.content
+{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    height: 100%;
+    width: 80%;
+    max-width: 1200px;
+    margin: auto;
+    padding: 3rem 0;
+
+    &__right
+    {
+        width: 50%;
+        max-width: 500px;
+        img{
+            width: 100%;
+        }
+    }
+    &__left
+    {
+        width: 40%;
+    }
+    p{
+        font-size: 1.2rem;
+        margin: 1rem 0;
+    }
+    button{
+        background: crimson;
+        border: none;
+        outline: none;
+        padding: .4rem 1rem;
+        color: white;
+        font-size: 1.1rem;
+        font-weight: 500;
+        cursor: pointer;
+        &:hover
+        {
+            opacity: .8;
+        }
+    }
+
+    @media screen and (max-width:780px) {
+        flex-direction: column;
+        &__right,&__left{
+            width: 100%;
+        }
+    }
+}
