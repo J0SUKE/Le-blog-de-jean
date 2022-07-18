@@ -8,7 +8,7 @@ import { logsinModaleContext } from '../../context/LogModaleContext';
 import { useContext } from 'react';
 import Login from '../Login/Login';
 import SignUp from '../Signup/Signup'
-
+import ResetPassword from '../ResetPassword/ResetPassword';
 
 export default function Layout({children}) {
   
@@ -39,6 +39,9 @@ export default function Layout({children}) {
                 :
                 modale=='signup' ?
                 <SignUp/>
+                :
+                modale=='reset' ?
+                <ResetPassword/>
                 :
                 null
             }

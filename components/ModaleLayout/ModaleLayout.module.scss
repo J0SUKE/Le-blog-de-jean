@@ -113,6 +113,15 @@
             {
                 opacity: .7;
             }
+            &.succes
+            {
+                cursor: default;
+                &:hover
+                {
+                    opacity: 1;
+                }
+            }
+
             input{
                 background: transparent;
                 border: none;
@@ -190,6 +199,12 @@
             button{
                 margin-top: 2rem;
             }
+        }
+
+        .succes
+        {
+            font-size: 1.1rem;
+            font-weight: 500;
         }
     }
 }

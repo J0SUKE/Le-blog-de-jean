@@ -47,11 +47,14 @@ export default function Login() {
             .then((resp)=>{
                 if (resp.exists()) 
                 {
-                    setUser({
+                    let userData = {
                         ...user,
                         username:resp.data().username,
-                        color:resp.data().color,
-                    })
+                    }
+                    if (resp.data().color) userData.color = resp.data().color
+                    else userData.photo = resp.data().photo;
+                    
+                    setUser(userData);
                     setModale(null);
                 }
             }).catch(error=>{
@@ -102,7 +105,10 @@ export default function Login() {
                 {
                     errorMessage && <p className={style.errorMessage}>{errorMessage}</p>
                 }
-                <button>Mot de passe oublié ?</button>
+                <button 
+                    type='button'
+                    onClick={()=>{setModale('reset')}}
+                >Mot de passe oublié ?</button>
                 <section className={`${style.submit} ${loading ? style.loading : ''}`}>                    
                     {
                         loading ?
