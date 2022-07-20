@@ -62,7 +62,6 @@ export default function Login() {
                 setLoading(false);
             })
         
-            // ...
         })
         .catch((error) => {
             const errorCode = error.code;
